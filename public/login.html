@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>دخول الأدمن | OMEGA Academy</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: #050a14; color: #e8e8e8; font-family: Tahoma, Arial, sans-serif;
+    }
+    .card {
+      width: 100%; max-width: 380px; margin: 16px; padding: 32px;
+      background: #0a1220; border: 1px solid #1c2740; border-radius: 14px;
+    }
+    h1 { margin: 0 0 6px; text-align: center; font-size: 24px; color: #d9a441; }
+    p.sub { margin: 0 0 24px; text-align: center; color: #8a93a6; font-size: 14px; }
+    label { display: block; margin: 14px 0 6px; font-size: 14px; color: #b5bccb; }
+    input {
+      width: 100%; padding: 12px; border-radius: 8px; font-size: 15px;
+      background: #060d19; border: 1px solid #1c2740; color: #fff;
+    }
+    input:focus { outline: none; border-color: #d9a441; }
+    button {
+      width: 100%; margin-top: 22px; padding: 13px; border: 0; border-radius: 8px;
+      background: #d9a441; color: #1a1200; font-size: 16px; font-weight: bold; cursor: pointer;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    #msg { margin-top: 16px; min-height: 22px; text-align: center; font-size: 14px; }
+    .err { color: #ff6b6b; }
+    .ok { color: #5ad18f; }
+    a { color: #d9a441; text-decoration: none; display: block; text-align: center; margin-top: 14px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>دخول الأدمن</h1>
+    <p class="sub">OMEGA Academy</p>
+
+    <label for="email">البريد الإلكتروني</label>
+    <input id="email" type="text" autocomplete="username" dir="ltr">
+
+    <label for="password">كلمة المرور</label>
+    <input id="password" type="password" autocomplete="current-password" dir="ltr">
+
+    <button id="btn" type="button">تسجيل الدخول</button>
+    <div id="msg"></div>
+    <a href="/">العودة للموقع</a>
+  </div>
+
+  <script>
+    const btn = document.getElementById('btn');
+    const msg = document.getElementById('msg');
+
+    async function login() {
+      msg.className = '';
+      msg.textContent = '';
+      btn.disabled = true;
+      try {
+        const res = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: document.getElementById('email').value.trim(),
+            password: document.getElementById('password').value
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.success) {
+          msg.className = 'ok';
+          msg.textContent = 'تم الدخول، جاري التحويل...';
+          window.location.href = '/admin.html';
+        } else {
+          msg.className = 'err';
+          msg.textContent = data.message || 'صار خطأ، جرّب مرة ثانية';
+        }
+      } catch (e) {
+        msg.className = 'err';
+        msg.textContent = 'ما قدرت أوصل للسيرفر، تأكد أنه شغّال';
+      }
+      btn.disabled = false;
+    }
+
+    btn.addEventListener('click', login);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Enter') login(); });
+  </script>
+</body>
+</html>

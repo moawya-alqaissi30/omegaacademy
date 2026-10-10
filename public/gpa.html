@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حساب المعدل | OMEGA Academy</title>
+<link rel="icon" href="./img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="brand"><img src="./img/logo.png" alt="شعار OMEGA Academy"><div class="brand-name">OMEGA <span>Academy</span></div></div>
+  <button class="navbar-toggle">☰</button>
+  <ul class="nav-links">
+    <li><a href="./index.html">الرئيسية</a></li>
+    <li><a href="./resources.html">المكتبة</a></li>
+    <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+    <li><a href="./courses.html">الدورات</a></li>
+    <li><a href="./programs.html">البرامج</a></li>
+    <li><a href="./gpa.html" class="active">حساب المعدل</a></li>
+    <li><a href="./contact.html">تواصل معنا</a></li>
+    <li id="auth-area"></li>
+  </ul>
+</nav>
+
+<section class="section gpa-page">
+  <h2 class="section-title">نموذج حساب المعدل التراكمي والفصلي (نظام 4.0)</h2>
+  <p class="section-subtitle">أدخل بياناتك السابقة ومواد الفصل الحالي لتحصل على المعدل الفصلي والتراكمي مباشرة.</p>
+
+  <div class="gpa-box">
+    <fieldset>
+      <legend>البيانات المتراكمة السابقة</legend>
+      <div class="gpa-fields two-col">
+        <div class="field"><label for="previous-gpa">المعدل التراكمي السابق</label><input id="previous-gpa" type="number" min="0" max="4" step="0.01" placeholder="مثال: 3.25"></div>
+        <div class="field"><label for="previous-hours">الساعات المقطوعة السابقة</label><input id="previous-hours" type="number" min="0" step="1" placeholder="مثال: 30"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>مواد الفصل الدراسي الحالي</legend>
+      <div class="course-head"><span>عدد الساعات</span><span>الرمز المتوقع</span><span>إعادة مادة؟</span><span>الرمز السابق</span><span></span></div>
+      <div id="courses-container"></div>
+      <button class="btn btn-outline btn-small mt-20" id="add-course">+ إضافة مادة للتقويم</button>
+    </fieldset>
+
+    <div class="gpa-actions">
+      <button class="btn btn-orange" id="calculate-btn">حساب المعدل</button>
+      <span class="form-msg" id="msg"></span>
+    </div>
+
+    <div class="gpa-results" aria-live="polite">
+      <div class="result-card"><div class="result-value" id="semester-gpa">0.00</div><div class="result-label">المعدل الفصلي الحالي</div></div>
+      <div class="result-card"><div class="result-value" id="semester-hours">0</div><div class="result-label">الساعات الداخلة في حساب المعدل الفصلي</div></div>
+      <div class="result-card"><div class="result-value" id="cumulative-gpa">0.00</div><div class="result-label">المعدل التراكمي</div></div>
+      <div class="result-card"><div class="result-value" id="cumulative-hours">0</div><div class="result-label">الساعات الداخلة في حساب المعدل التراكمي</div></div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="social"><a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a><a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a></div><p>© 2026 OMEGA Academy — بإشراف م. معاوية القيسي. جميع الحقوق محفوظة.</p></footer>
+<script src="./js/app.js"></script>
+<script>
+// سلم علامات الجامعة (نظام 4.0)
+const GRADE_POINTS = {
+  'A+': 4.0, 'A': 3.75, 'A-': 3.5,
+  'B+': 3.25, 'B': 3.0, 'B-': 2.75,
+  'C+': 2.5, 'C': 2.25, 'C-': 2.0,
+  'D+': 1.75, 'D': 1.5, 'F': 0.0
+};
+const GRADES = Object.keys(GRADE_POINTS);
+
+// تبدأ الصفحة بمادة واحدة جاهزة للتعبئة
+let courses = [{ hours: '3', grade: '', repeat: 'no', previousGrade: '' }];
+
+function courseRowHtml(course, index) {
+  const gradeOptions = GRADES.map(g => `<option value="${g}" ${course.grade === g ? 'selected' : ''}>${g}</option>`).join('');
+  const prevGradeOptions = GRADES.map(g => `<option value="${g}" ${course.previousGrade === g ? 'selected' : ''}>${g}</option>`).join('');
+  const repeatOptions = `<option value="no" ${course.repeat !== 'yes' ? 'selected' : ''}>لا</option><option value="yes" ${course.repeat === 'yes' ? 'selected' : ''}>نعم</option>`;
+
+  return `
+    <div class="gpa-course-row" data-index="${index}">
+      <input type="number" min="1" max="6" step="1" class="course-hours" value="${course.hours || ''}" placeholder="3">
+      <select class="course-grade"><option value="">اختر الرمز</option>${gradeOptions}</select>
+      <select class="course-repeat">${repeatOptions}</select>
+      <select class="course-previous" ${course.repeat === 'yes' ? '' : 'disabled'}><option value="">الرمز السابق</option>${prevGradeOptions}</select>
+      <button class="btn btn-danger btn-small remove-course" type="button">حذف</button>
+    </div>`;
+}
+
+function renderCourses() {
+  const container = document.getElementById('courses-container');
+  if (!courses.length) {
+    container.innerHTML = '<p class="empty-state">أضف مواد الفصل الحالي للبدء.</p>';
+    return;
+  }
+  container.innerHTML = courses.map(courseRowHtml).join('');
+  container.querySelectorAll('.gpa-course-row').forEach(row => {
+    const index = Number(row.dataset.index);
+    row.querySelector('.course-hours').addEventListener('input', e => courses[index].hours = e.target.value);
+    row.querySelector('.course-grade').addEventListener('change', e => courses[index].grade = e.target.value);
+    row.querySelector('.course-repeat').addEventListener('change', e => {
+      courses[index].repeat = e.target.value;
+      renderCourses();
+    });
+    row.querySelector('.course-previous').addEventListener('change', e => courses[index].previousGrade = e.target.value);
+    row.querySelector('.remove-course').addEventListener('click', () => { courses.splice(index, 1); renderCourses(); });
+  });
+}
+
+function calculateGPA() {
+  const previousGpa = parseFloat(document.getElementById('previous-gpa').value) || 0;
+  const previousHours = parseInt(document.getElementById('previous-hours').value) || 0;
+
+  let semHours = 0;
+  let semPoints = 0;
+
+  let newCumHours = previousHours;
+  let totalCumPoints = previousGpa * previousHours;
+
+  for (const c of courses) {
+    const h = parseInt(c.hours) || 0;
+    const gPoints = GRADE_POINTS[c.grade];
+
+    if (h > 0 && gPoints !== undefined) {
+      semHours += h;
+      semPoints += gPoints * h;
+
+      if (c.repeat === 'yes') {
+        const prevGPoints = GRADE_POINTS[c.previousGrade] || 0;
+        // خصم نقاط المادة السابقة وإضافة الجديدة (الساعات ما تزيد)
+        totalCumPoints = totalCumPoints - (prevGPoints * h) + (gPoints * h);
+      } else {
+        newCumHours += h;
+        totalCumPoints += gPoints * h;
+      }
+    }
+  }
+
+  const semesterGpa = semHours > 0 ? (semPoints / semHours) : 0;
+  const cumulativeGpa = newCumHours > 0 ? (totalCumPoints / newCumHours) : 0;
+
+  showResults({
+    semesterGpa: semesterGpa.toFixed(2),
+    semesterHours: semHours,
+    cumulativeGpa: cumulativeGpa.toFixed(2),
+    cumulativeHours: newCumHours
+  });
+  // ملاحظة: لا يتم حفظ أي بيانات، كل شيء يُحسب في الصفحة فقط
+}
+
+function showResults(data) {
+  document.getElementById('semester-gpa').textContent = data.semesterGpa || '0.00';
+  document.getElementById('semester-hours').textContent = data.semesterHours || 0;
+  document.getElementById('cumulative-gpa').textContent = data.cumulativeGpa || '0.00';
+  document.getElementById('cumulative-hours').textContent = data.cumulativeHours || 0;
+}
+
+document.getElementById('add-course').addEventListener('click', () => {
+  courses.push({ hours: '3', grade: '', repeat: 'no', previousGrade: '' });
+  renderCourses();
+});
+
+document.getElementById('calculate-btn').addEventListener('click', () => {
+  const msg = document.getElementById('msg');
+  const previousGpa = parseFloat(document.getElementById('previous-gpa').value) || 0;
+  if (previousGpa < 0 || previousGpa > 4) {
+    showMsg(msg, 'المعدل التراكمي السابق يجب أن يكون بين 0 و 4.', 'error');
+    return;
+  }
+  calculateGPA();
+  showMsg(msg, 'تم حساب المعدل بنجاح.', 'success');
+});
+
+// بدء الصفحة فارغة. ننظّف أي بيانات قديمة كانت محفوظة بالمتصفح من النسخة السابقة.
+try { localStorage.removeItem('gpa_data'); } catch (err) {}
+renderCourses();
+</script>
+</body>
+</html>

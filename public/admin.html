@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | OMEGA Academy</title>
+<link rel="icon" href="./img/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
+<style>
+  .course-row { display: grid; gap: 10px; align-items: center; }
+  .course-row input {
+    width: 100%; padding: 10px 12px; border-radius: 8px;
+    border: 1px solid #2a3a63; background: #0e1730; color: #fff;
+    font-family: inherit; font-size: .9rem;
+  }
+  .course-row input:focus { outline: none; border-color: #f5a623; }
+  .course-row input::placeholder { color: #8a93a6; }
+  .tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="brand">
+    <img src="./img/logo.png" alt="شعار OMEGA Academy">
+    <div class="brand-name">OMEGA <span>Academy</span></div>
+  </div>
+  <button class="navbar-toggle">☰</button>
+  <ul class="nav-links">
+    <li><a href="./index.html">الرئيسية</a></li>
+    <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+    <li id="auth-area"></li>
+  </ul>
+</nav>
+
+<section class="section">
+  <h2 class="section-title">لوحة تحكم الأدمن</h2>
+  <p class="section-subtitle">إدارة المصادر التعليمية، البرامج، والدورات</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="resources">المكتبة</button>
+    <button class="tab-btn" data-tab="programs">البرامج</button>
+    <button class="tab-btn" data-tab="courses">الدورات</button>
+  </div>
+
+  <!-- تبويب المصادر -->
+  <div class="tab-panel active" id="tab-resources">
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <h3 style="margin-bottom:16px;">إضافة مصدر جديد</h3>
+      <form id="resource-form">
+        <div class="course-row" style="grid-template-columns: 1.5fr 2.5fr 1fr auto;">
+          <input type="text" placeholder="اسم المادة (مثال: Thermo 1)" name="title" required>
+          <input type="url" placeholder="رابط مجلد Google Drive" name="url" required>
+          <input type="text" placeholder="التخصص (اختياري)" name="subject">
+          <button type="submit" class="btn btn-orange btn-small">إضافة</button>
+        </div>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>المادة</th><th>الرابط</th><th></th></tr></thead>
+        <tbody id="resources-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- تبويب البرامج -->
+  <div class="tab-panel" id="tab-programs">
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <h3 style="margin-bottom:16px;">إضافة برنامج جديد</h3>
+      <form id="program-form">
+        <div class="course-row" style="grid-template-columns: 1fr 1.3fr 2fr 1.5fr 1.5fr auto;">
+          <input type="text" placeholder="اسم البرنامج" name="title" required>
+          <input type="text" placeholder="التصنيف" name="category" list="categories-list" required>
+          <input type="text" placeholder="الوصف" name="description">
+          <input type="url" placeholder="رابط التحميل" name="downloadUrl">
+          <input type="url" placeholder="رابط طريقة التثبيت (اختياري)" name="installUrl">
+          <button type="submit" class="btn btn-orange btn-small">إضافة</button>
+        </div>
+        <datalist id="categories-list"></datalist>
+      </form>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>البرنامج</th><th>التصنيف</th><th></th></tr></thead>
+        <tbody id="programs-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- تبويب الدورات -->
+  <div class="tab-panel" id="tab-courses">
+    <div class="table-wrap" style="margin-bottom:24px;">
+      <h3 style="margin-bottom:16px;">إضافة دورة جديدة</h3>
+      <form id="course-form">
+        <div class="course-row" style="grid-template-columns: 1.5fr 2fr 1fr 1fr auto;">
+          <input type="text" placeholder="عنوان الدورة" name="title" required>
+          <input type="text" placeholder="الوصف" name="description">
+          <input type="text" placeholder="المدة" name="duration">
+          <input type="text" placeholder="التصنيف" name="category">
+          <button type="submit" class="btn btn-orange btn-small">إضافة</button>
+        </div>
+      </form>
+    </div>
+    <div class="table-wrap"><table><thead><tr><th>العنوان</th><th>التصنيف</th><th>المدة</th><th></th></tr></thead><tbody id="courses-tbody"></tbody></table></div>
+  </div>
+</section>
+
+<script src="./js/app.js"></script>
+<script>
+// ---------- التبويبات ----------
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
+  });
+});
+
+// تنفيذ أي عملية مع إظهار رسالة إذا صار خطأ
+async function safe(fn) {
+  try { await fn(); } catch (err) { alert(err.message || 'حدث خطأ'); }
+}
+
+// ---------- المصادر ----------
+async function loadResources() {
+  const data = await api('/api/resources');
+  const tbody = document.getElementById('resources-tbody');
+  if (!data.resources.length) {
+    tbody.innerHTML = '<tr><td colspan="3">لا يوجد مصادر بعد</td></tr>';
+    return;
+  }
+  tbody.innerHTML = data.resources.map(r => `
+    <tr>
+      <td>${escapeHtml(r.title)}</td>
+      <td><a href="${escapeHtml(r.url || '#')}" target="_blank" rel="noopener" style="color:var(--orange,#ff9900);">فتح</a></td>
+      <td><button class="btn btn-danger btn-small" data-id="${r.id}" data-type="resource">حذف</button></td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('resource-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  safe(async () => {
+    const form = new FormData(e.target);
+    await api('/api/resources', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: form.get('title'),
+        url: form.get('url'),
+        subject: form.get('subject') || ''
+      })
+    });
+    e.target.reset();
+    await loadResources();
+  });
+});
+
+// ---------- البرامج ----------
+async function loadPrograms() {
+  const data = await api('/api/programs');
+  const tbody = document.getElementById('programs-tbody');
+  if (!data.programs.length) {
+    tbody.innerHTML = '<tr><td colspan="3">لا يوجد برامج بعد</td></tr>';
+    return;
+  }
+  // تعبئة اقتراحات التصنيفات من الموجود حالياً
+  const cats = [...new Set(data.programs.map(p => p.category).filter(Boolean))];
+  document.getElementById('categories-list').innerHTML =
+    cats.map(c => `<option value="${escapeHtml(c)}"></option>`).join('');
+
+  tbody.innerHTML = data.programs.map(p => `
+    <tr>
+      <td>${escapeHtml(p.title)}</td>
+      <td>${escapeHtml(p.category || '-')}</td>
+      <td><button class="btn btn-danger btn-small" data-id="${p.id}" data-type="program">حذف</button></td>
+    </tr>
+  `).join('');
+}
+
+document.getElementById('program-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  safe(async () => {
+    const form = new FormData(e.target);
+    await api('/api/programs', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: form.get('title'),
+        category: form.get('category'),
+        description: form.get('description'),
+        downloadUrl: form.get('downloadUrl'),
+        installUrl: form.get('installUrl')
+      })
+    });
+    e.target.reset();
+    await loadPrograms();
+  });
+});
+
+// ---------- الدورات ----------
+async function loadCourses() {
+  const data = await api('/api/courses');
+  const tbody = document.getElementById('courses-tbody');
+  if (!data.courses.length) { tbody.innerHTML = '<tr><td colspan="4">لا يوجد دورات بعد</td></tr>'; return; }
+  tbody.innerHTML = data.courses.map(c => `<tr><td>${escapeHtml(c.title)}</td><td>${escapeHtml(c.category || '-')}</td><td>${escapeHtml(c.duration || '-')}</td><td><button class="btn btn-danger btn-small" data-id="${c.id}" data-type="course">حذف</button></td></tr>`).join('');
+}
+
+document.getElementById('course-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  safe(async () => {
+    const form = new FormData(e.target);
+    await api('/api/courses', { method: 'POST', body: JSON.stringify({ title: form.get('title'), description: form.get('description'), duration: form.get('duration'), category: form.get('category') }) });
+    e.target.reset();
+    await loadCourses();
+  });
+});
+
+// ---------- تفويض النقر على أزرار الحذف ----------
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('button[data-type]');
+  if (!btn) return;
+  const { id, type } = btn.dataset;
+
+  safe(async () => {
+    if (type === 'resource' && confirm('هل تريد حذف هذا المصدر؟')) {
+      await api(`/api/resources/${id}`, { method: 'DELETE' });
+      await loadResources();
+    }
+    if (type === 'program' && confirm('هل تريد حذف هذا البرنامج؟')) {
+      await api(`/api/programs/${id}`, { method: 'DELETE' });
+      await loadPrograms();
+    }
+    if (type === 'course' && confirm('هل تريد حذف هذه الدورة؟')) {
+      await api(`/api/courses/${id}`, { method: 'DELETE' });
+      await loadCourses();
+    }
+  });
+});
+
+(async () => {
+  const admin = await requireAuth({ adminOnly: true });
+  if (!admin) return;
+  safe(async () => {
+    await Promise.all([loadResources(), loadPrograms(), loadCourses()]);
+  });
+})();
+</script>
+</body>
+</html>

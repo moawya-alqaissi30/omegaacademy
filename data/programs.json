@@ -1,0 +1,114 @@
+[
+  {
+    "id": "p1",
+    "title": "Code::Blocks",
+    "category": "💻 البرمجة وبيئات التطوير",
+    "description": "بيئة تطوير متكاملة (IDE) مجانية ومفتوحة المصدر خفيفة السلاسة لكتابة وتنفيذ برامج C و C++ بسهولة للتطبيقات الهندسية.",
+    "downloadUrl": "https://www.codeblocks.org/downloads/binaries/",
+    "installUrl": ""
+  },
+  {
+    "id": "p2",
+    "title": "MATLAB",
+    "category": "💻 البرمجة وبيئات التطوير",
+    "description": "البيئة الأولى عالمياً للحسابات الهندسية، التحليل العددي، المحاكاة الرياضية ورسم البيانات والمعادلات المعقدة. متوفر مجاناً للطلاب إذا كانت جامعتك عندها ترخيص شامل (Campus-Wide)، ويمكن تشغيله أيضاً عبر MATLAB Online من المتصفح.",
+    "downloadUrl": "https://www.mathworks.com/products/matlab-online.html",
+    "installUrl": ""
+  },
+  {
+    "id": "p3",
+    "title": "Visual Studio Code",
+    "category": "💻 البرمجة وبيئات التطوير",
+    "description": "محرر الأكواد الأكثر انتشاراً للغات البرمجة المختلفة (Python, C++, HTML...) مزود بإضافات هندسية واسعة.",
+    "downloadUrl": "https://code.visualstudio.com/download?_exp_download=fb315fc982",
+    "installUrl": ""
+  },
+  {
+    "id": "p4",
+    "title": "Arduino IDE",
+    "category": "💻 البرمجة وبيئات التطوير",
+    "description": "البرنامج الرسمي لبرمجة متحكمات الأردوينو، ربط الحساسات والمحركات، وبناء مشاريع التحكم الآلي والميكاترونكس.",
+    "downloadUrl": "https://www.arduino.cc/en/software/",
+    "installUrl": ""
+  },
+  {
+    "id": "p5",
+    "title": "Ansys Student",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "الحزمة الأقوى عالمياً للمحاكاة الهندسية والتحليل باستخدام العناصر المنتهية (FEA) وديناميكا الموائع الحسابية (CFD) لدراسة الإجهادات وانتقال الحرارة والجريان. النسخة الطلابية الرسمية مجانية وتشمل Mechanical وFluent وDiscovery، للاستخدام التعليمي فقط.",
+    "downloadUrl": "https://www.ansys.com/academic/students/ansys-student",
+    "installUrl": ""
+  },
+  {
+    "id": "p6",
+    "title": "SolidWorks Student Edition",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "البرنامج الرائد عالمياً في التصميم والنمذجة الميكانيكية ثلاثية الأبعاد، تجميع قطع الآلات، وإجراء محاكاة الإجهادات والحركة الاحترافية. تتوفر للطلاب عبر المتجر الرسمي لشركة Dassault Systèmes، وبعض الجامعات توفّر ترخيصاً مجانياً، فاسأل جامعتك.",
+    "downloadUrl": "https://www.solidworks.com/studentstore",
+    "installUrl": ""
+  },
+  {
+    "id": "p7",
+    "title": "PTC Creo (النسخة الجامعية المجانية)",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "أحد أقوى برامج التصميم الميكانيكي ثلاثي الأبعاد لنمذجة الأجزاء المعقدة، التجميع (Assembly)، وتحليل الإجهادات والمحاكاة. النسخة الجامعية مجانية للطلاب عبر برنامج PTC Academic.",
+    "downloadUrl": "https://www.ptc.com/en/academic-program/products/free-software/creo-college-download",
+    "installUrl": ""
+  },
+  {
+    "id": "p8",
+    "title": "AutoCAD",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "البرنامج القياسي لتصميم المخططات الهندسية التفصيلية 2D/3D، المخططات التنفيذية، والتصاميم المعمارية والميكانيكية. مجاني للطلاب المؤهلين عبر برنامج Autodesk Education لمدة سنة.",
+    "downloadUrl": "https://www.autodesk.com/education/home",
+    "installUrl": ""
+  },
+  {
+    "id": "p9",
+    "title": "Autodesk Revit",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "برنامج نمذجة معلومات المباني (BIM) للتصميم الميكانيكي، الكهربائي، والمعماري (MEP) مع دعم كامل لتنسيق شبكات التكييف. مجاني للطلاب المؤهلين عبر برنامج Autodesk Education لمدة سنة.",
+    "downloadUrl": "https://www.autodesk.com/education/home",
+    "installUrl": ""
+  },
+  {
+    "id": "p10",
+    "title": "Autodesk 3ds Max",
+    "category": "📐 التصميم والنمذجة الهندسية والتحليل (CAD / FEA / CFD / BIM)",
+    "description": "برنامج احترافي في النمذجة ثلاثية الأبعاد، الإظهار المعماري (Rendering)، والتحريك عالي الدقة للمشاريع الهندسية. مجاني للطلاب المؤهلين عبر برنامج Autodesk Education لمدة سنة.",
+    "downloadUrl": "https://www.autodesk.com/education/home",
+    "installUrl": ""
+  },
+  {
+    "id": "p11",
+    "title": "PVsyst",
+    "category": "⚡ الطاقة والأبحاث الحرارية والتكييف (HVAC)",
+    "description": "الأداة الاحترافية الأولى لدراسة، محاكاة، وتحليل أداء المنظومات الكهروضوئية (Solar PV) وحساب الإنتاجية المالية والحرارية. تتوفر نسخة تجريبية كاملة لمدة 30 يوماً من الموقع الرسمي.",
+    "downloadUrl": "https://www.pvsyst.com/",
+    "installUrl": ""
+  },
+  {
+    "id": "p12",
+    "title": "EES (Engineering Equation Solver)",
+    "category": "⚡ الطاقة والأبحاث الحرارية والتكييف (HVAC)",
+    "description": "برنامج حل المعادلات الهندسية وحساب الخواص الثرموديناميكية ومائع التبريد لمشروعات التكييف، محطات الطاقة والدورات الحرارية. تتوفر نسخة تجريبية (Demo) وتراخيص للطلاب من شركة F-Chart، وغالباً يوفّر الدكتور مفتاح الترخيص في المساق.",
+    "downloadUrl": "https://fchartsoftware.com/ees/",
+    "installUrl": ""
+  },
+  {
+    "id": "p13",
+    "title": "Carrier HAP",
+    "category": "⚡ الطاقة والأبحاث الحرارية والتكييف (HVAC)",
+    "description": "برنامج شركة كاريير المعتمد لحساب أحمال التبريد والتدفئة للمباني وتصميم أنظمة التكييف المركزي واختيار المعدات المناسبة.",
+    "downloadUrl": "https://drive.google.com/drive/folders/1o92ma5rGBh_5w3Pnmz4sCksQBcJj3SNR?usp=sharing",
+    "installUrl": ""
+  },
+  {
+    "id": "p14",
+    "title": "McQuay Duct Sizer",
+    "category": "⚡ الطاقة والأبحاث الحرارية والتكييف (HVAC)",
+    "description": "أداة هندسية سريعة ودقيقة لحساب أبعاد مجاري الهواء (Ducts)، سرعة الهواء، وهبوط الضغط لأنظمة التكييف والتهوية.",
+    "downloadUrl": "https://drive.google.com/drive/folders/1o92ma5rGBh_5w3Pnmz4sCksQBcJj3SNR?usp=sharing",
+    "installUrl": ""
+  }
+]

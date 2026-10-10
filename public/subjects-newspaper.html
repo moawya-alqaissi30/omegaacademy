@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جريدة المواد | OMEGA Academy</title>
+
+  <link rel="icon" href="./img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+
+  <style>
+    .newspaper-section {
+      padding: 40px 20px;
+      min-height: 85vh;
+      text-align: center;
+    }
+    .newspaper-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .newspaper-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      background: #ff9900;
+      color: #000;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action:hover {
+      background: #e68a00;
+      transform: translateY(-2px);
+    }
+    .btn-outline-action {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .btn-outline-action:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ff9900;
+    }
+    .img-preview-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 153, 0, 0.3);
+      background: #111;
+      padding: 10px;
+    }
+    .img-preview-wrapper img {
+      width: 100%;
+      min-width: 900px;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل العلوي -->
+  <nav class="navbar">
+    <div class="brand">
+      <img src="./img/logo.png" alt="شعار OMEGA Academy">
+      <div class="brand-name">OMEGA <span>Academy</span></div>
+    </div>
+    <button class="navbar-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="./index.html">الرئيسية</a></li>
+      <li><a href="./resources.html">المكتبة</a></li>
+      <li><a href="./subjects-newspaper.html" class="active">جريدة المواد</a></li>
+      <li><a href="./courses.html">الدورات</a></li>
+      <li><a href="./programs.html">البرامج</a></li>
+      <li><a href="./gpa.html">حساب المعدل</a></li>
+      <li><a href="./contact.html">تواصل معنا</a></li>
+      <li id="auth-area"></li>
+    </ul>
+  </nav>
+
+  <!-- قسم عرض جريدة المواد -->
+  <section class="newspaper-section">
+    <h1>جريدة <span>المواد الهندسية</span></h1>
+    <p style="color: #bbb; margin-bottom: 20px;">الخطة الشجرية للهندسة الميكانيكية .</p>
+
+    <div class="newspaper-container">
+      <div class="newspaper-actions">
+        <a href="./img/plan.jpg" download="الخطة الشجرية 2022.jpg" class="btn-action">
+          تحميل الصورة 📥
+        </a>
+        <a href="./img/plan.jpg" target="_blank" class="btn-action btn-outline-action">
+          فتح الصورة بحجم كامل 🔍
+        </a>
+      </div>
+
+      <!-- عرض الصورة مباشرة -->
+      <div class="img-preview-wrapper">
+        <img src="./img/plan.jpg" alt="الخطة الشجرية للهندسة الميكانيكية 2022">
+      </div>
+    </div>
+  </section>
+
+  <!-- التذييل Footer -->
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+      <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+    </div>
+    <p>© 2026 OMEGA Academy — جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

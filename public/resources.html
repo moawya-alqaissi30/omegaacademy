@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مكتبة OMEGA | المواد الهندسية</title>
+  <link rel="icon" href="./img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    .resources-section {
+      padding: 50px 20px;
+      min-height: 80vh;
+      text-align: center;
+    }
+    .search-box {
+      margin: 0 auto 30px auto;
+      max-width: 500px;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: 1px solid #ff9900;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      text-align: center;
+    }
+    .folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .folder-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: #fff;
+    }
+    .folder-card:hover {
+      transform: translateY(-5px);
+      border-color: #ff9900;
+      background: rgba(255, 153, 0, 0.08);
+    }
+    .folder-icon {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .folder-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #e0e0e0;
+      direction: ltr; /* لضمان ظهور أسماء المواد الإنجليزية بشكل صحيح */
+    }
+    .btn-open {
+      background: #ff9900;
+      color: #000;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    .grid-message {
+      grid-column: 1 / -1;
+      color: #bbb;
+      font-size: 1.1rem;
+      padding: 40px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل العلوي -->
+  <nav class="navbar">
+    <div class="brand">
+      <img src="./img/logo.png" alt="شعار OMEGA Academy">
+      <div class="brand-name">OMEGA <span>Academy</span></div>
+    </div>
+    <button class="navbar-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="./index.html">الرئيسية</a></li>
+      <li><a href="./resources.html" class="active">المكتبة</a></li>
+      <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+      <li><a href="./courses.html">الدورات</a></li>
+      <li><a href="./programs.html">البرامج</a></li>
+      <li><a href="./gpa.html">حساب المعدل</a></li>
+      <li><a href="./contact.html">تواصل معنا</a></li>
+      <li id="auth-area"></li>
+    </ul>
+  </nav>
+
+  <section class="resources-section">
+    <h1 style="color:#fff;">مكتبة <span>OMEGA</span> الهندسية</h1>
+    <p style="color: #bbb; margin-bottom: 25px;">اختر المادة للوصول المباشر لملفات ومراجع Google Drive</p>
+
+    <!-- شريط بحث سريع عن المواد -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="ابحث عن مادة (مثلاً: HVAC, Dynamic, Thermo)...">
+    </div>
+
+    <!-- شبكة مجلدات المواد (تُحمَّل من السيرفر، وتُدار من لوحة الأدمن) -->
+    <div class="folders-grid" id="foldersContainer"></div>
+  </section>
+
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+      <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+    </div>
+    <p>© 2026 OMEGA Academy — جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script src="./js/app.js"></script>
+  <script>
+    let folders = [];
+    const container = document.getElementById('foldersContainer');
+
+    // نسمح فقط بروابط http/https
+    const safeUrl = (u) => /^https?:\/\//i.test(u || '') ? u : '#';
+
+    function displayFolders(data) {
+      container.innerHTML = '';
+      if (!data.length) {
+        container.innerHTML = '<p class="grid-message">لا توجد نتائج.</p>';
+        return;
+      }
+      data.forEach(f => {
+        const card = document.createElement('a');
+        card.className = 'folder-card';
+        card.href = safeUrl(f.url);
+        card.target = '_blank';
+        card.rel = 'noopener';
+        card.innerHTML = `
+          <div class="folder-icon">📁</div>
+          <div class="folder-title">${escapeHtml(f.title || '')}</div>
+          <span class="btn-open">فتح المجلد</span>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      displayFolders(folders.filter(f => (f.title || '').toLowerCase().includes(q)));
+    });
+
+    (async () => {
+      try {
+        const data = await api('/api/resources');
+        folders = data.resources || [];
+        if (!folders.length) {
+          container.innerHTML = '<p class="grid-message">ستتوفر قريباً</p>';
+          return;
+        }
+        displayFolders(folders);
+      } catch (e) {
+        container.innerHTML = '<p class="grid-message">تعذّر تحميل المواد، حاول مرة ثانية.</p>';
+      }
+    })();
+  </script>
+</body>
+</html>

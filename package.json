@@ -1,0 +1,14 @@
+{
+  "name": "omega-academy",
+  "version": "1.0.0",
+  "description": "موقع OMEGA Academy - منصة تعليمية لطلاب الهندسة",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "م. معاوية القيسي",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

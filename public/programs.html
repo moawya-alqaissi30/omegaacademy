@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>البرامج الهندسية | OMEGA Academy</title>
+  <link rel="icon" href="./img/logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    /* خانة البحث */
+    .search-wrapper {
+      max-width: 650px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 16px 24px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 153, 0, 0.35);
+      color: #ffffff;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.15rem;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-input:focus {
+      border-color: #ff9900;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 20px rgba(255, 153, 0, 0.35);
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    /* عناوين التصنيفات */
+    .category-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ff9900;
+      margin: 45px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid rgba(255, 153, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* شبكة الكروت الكبيرة */
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .program-card {
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 153, 0, 0.25);
+      border-radius: 16px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 250px;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .program-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 153, 0, 0.6);
+      box-shadow: 0 15px 30px rgba(255, 153, 0, 0.18);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .program-card h3 {
+      color: #ffffff;
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .program-card p {
+      color: var(--text-muted, #d1d1d1);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 25px;
+      flex-grow: 1;
+    }
+
+    .program-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-program {
+      flex: 1;
+      min-width: 130px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .btn-download {
+      background-color: #ff9900;
+      color: #000000;
+    }
+
+    .btn-download:hover {
+      background-color: #e68a00;
+      box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+    }
+
+    .btn-install {
+      background-color: transparent;
+      color: #ff9900;
+      border: 1px solid #ff9900;
+    }
+
+    .btn-install:hover {
+      background-color: rgba(255, 153, 0, 0.12);
+      color: #ffffff;
+    }
+
+    .no-results {
+      text-align: center;
+      color: var(--text-muted, #aaa);
+      font-size: 1.25rem;
+      padding: 60px 0;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط التنقل العلوي -->
+  <nav class="navbar">
+    <div class="brand">
+      <img src="./img/logo.png" alt="شعار OMEGA Academy">
+      <div class="brand-name">OMEGA <span>Academy</span></div>
+    </div>
+    <button class="navbar-toggle">☰</button>
+    <ul class="nav-links">
+      <li><a href="./index.html">الرئيسية</a></li>
+      <li><a href="./resources.html">المكتبة</a></li>
+      <li><a href="./subjects-newspaper.html">جريدة المواد</a></li>
+      <li><a href="./courses.html">الدورات</a></li>
+      <li><a href="./programs.html" class="active">البرامج</a></li>
+      <li><a href="./gpa.html">حساب المعدل</a></li>
+      <li><a href="./contact.html">تواصل معنا</a></li>
+      <li id="auth-area"></li>
+    </ul>
+  </nav>
+
+  <!-- قسم البرامج الهندسية -->
+  <section class="section">
+    <h2 class="section-title">البرامج الهندسية والبرمجية</h2>
+    <p class="section-subtitle">حزمة متكاملة ومصنفة من البرامج والأدوات الهندسية المعتمدة مع روابط التحميل وأدلة التثبيت</p>
+
+    <!-- خانة البحث -->
+    <div class="search-wrapper">
+      <input type="text" id="program-search" class="search-input" placeholder="🔍 ابحث عن برنامج (مثال: ANSYS, SolidWorks, MATLAB, Creo, HAP...)...">
+    </div>
+
+    <!-- رسالة عدم وجود نتائج -->
+    <div class="no-results" id="no-results">لم يتم العثور على برامج تطابق بحثك.</div>
+
+    <!-- التصنيفات والبرامج (تُحمَّل من السيرفر، وتُدار من لوحة الأدمن) -->
+    <div id="programs-root"></div>
+  </section>
+
+  <!-- التذييل Footer -->
+  <footer>
+    <div class="social">
+      <a href="https://www.facebook.com/share/1HXUwC6CDM/?mibextid=wwXIfr" target="_blank" rel="noopener">فيسبوك</a>
+      <a href="https://www.instagram.com/omega__hu?igsi=MWMzbTNhemV3dDYzbA%3D%3D&utm_source=qr" target="_blank" rel="noopener">انستقرام</a>
+    </div>
+    <p>© 2026 OMEGA Academy — بإشراف م. معاوية القيسي. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script src="./js/app.js"></script>
+  <script>
+    const root = document.getElementById('programs-root');
+    const searchInput = document.getElementById('program-search');
+    const noResults = document.getElementById('no-results');
+
+    // نسمح فقط بروابط http/https
+    const safeUrl = (u) => /^https?:\/\//i.test(u || '') ? u : '';
+
+    function cardHtml(p) {
+      const dl = safeUrl(p.downloadUrl);
+      const ins = safeUrl(p.installUrl);
+      const dlLabel = dl.includes('drive.google.com') ? 'تحميل من Google Drive' : 'تحميل البرنامج';
+      return `
+        <div class="program-card">
+          <h3>${escapeHtml(p.title || '')}</h3>
+          <p>${escapeHtml(p.description || '')}</p>
+          <div class="program-actions">
+            ${dl ? `<a href="${escapeHtml(dl)}" target="_blank" rel="noopener" class="btn-program btn-download">${dlLabel}</a>` : ''}
+            ${ins ? `<a href="${escapeHtml(ins)}" target="_blank" rel="noopener" class="btn-program btn-install">طريقة التثبيت</a>` : ''}
+          </div>
+        </div>`;
+    }
+
+    function render(programs) {
+      // تجميع حسب التصنيف مع الحفاظ على ترتيب ظهور التصنيفات
+      const groups = new Map();
+      programs.forEach(p => {
+        const cat = p.category || 'برامج أخرى';
+        if (!groups.has(cat)) groups.set(cat, []);
+        groups.get(cat).push(p);
+      });
+
+      root.innerHTML = [...groups].map(([cat, list]) => `
+        <div class="category-block">
+          <h3 class="category-title">${escapeHtml(cat)}</h3>
+          <div class="programs-grid">${list.map(cardHtml).join('')}</div>
+        </div>`).join('');
+    }
+
+    // البحث التفاعلي وإخفاء التصنيفات الفارغة أثناء البحث
+    searchInput.addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase().trim();
+      let totalVisibleCards = 0;
+
+      root.querySelectorAll('.category-block').forEach(block => {
+        let blockVisible = 0;
+        block.querySelectorAll('.program-card').forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const desc = card.querySelector('p').textContent.toLowerCase();
+          const show = title.includes(term) || desc.includes(term);
+          card.style.display = show ? 'flex' : 'none';
+          if (show) { blockVisible++; totalVisibleCards++; }
+        });
+        block.style.display = blockVisible > 0 ? 'block' : 'none';
+      });
+
+      noResults.style.display = totalVisibleCards > 0 ? 'none' : 'block';
+    });
+
+    (async () => {
+      try {
+        const data = await api('/api/programs');
+        const programs = data.programs || [];
+        if (!programs.length) {
+          root.innerHTML = '<p style="text-align:center;color:#bbb;font-size:1.3rem;padding:60px 0;">ستتوفر قريباً</p>';
+          return;
+        }
+        render(programs);
+      } catch (e) {
+        root.innerHTML = '<p style="text-align:center;color:#bbb;padding:60px 0;">تعذّر تحميل البرامج، حاول مرة ثانية.</p>';
+      }
+    })();
+  </script>
+</body>
+</html>
